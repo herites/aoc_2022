@@ -1,2 +1,5 @@
 venv
 *.txt
+*.csv
+__pycache__
+workbook.py
