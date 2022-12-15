@@ -1,16 +1,3 @@
-"""
-    [P]                 [Q]     [T]
-[F] [N]             [P] [L]     [M]
-[H] [T] [H]         [M] [H]     [Z]
-[M] [C] [P]     [Q] [R] [C]     [J]
-[T] [J] [M] [F] [L] [G] [R]     [Q]
-[V] [G] [D] [V] [G] [D] [N] [W] [L]
-[L] [Q] [S] [B] [H] [B] [M] [L] [D]
-[D] [H] [R] [L] [N] [W] [G] [C] [R]
- 1   2   3   4   5   6   7   8   9 
-"""
-
-
 def main():
     instructions = load_input()[10:]
     global CRATE_LAYOUT
@@ -44,9 +31,16 @@ def move_crates(instruction: str):
         if i.isnumeric():
             nums.append(int(i))
     instruction = dict(zip(actions, nums))
-    for i in range(instruction["crate_count"]):
+    if instruction["crate_count"] == 1:
         popped = CRATE_LAYOUT[instruction["from"]].pop()
         CRATE_LAYOUT[instruction["to"]].append(popped)
+    else:
+        popped_list = []
+        for i in range(instruction["crate_count"]):
+            popped = CRATE_LAYOUT[instruction["from"]].pop()
+            popped_list.append(popped)
+        for i in list(reversed(popped_list)):
+            CRATE_LAYOUT[instruction["to"]].append(i)
 
 
 def load_input(file: str = "input.txt") -> list[str]:
